@@ -1,3 +1,5 @@
+import time
+import hashlib
 # '''
 # Linked List hash table key/value pair
 # '''
@@ -23,7 +25,7 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        return hash(key)
+        return int(hashlib.sha256(b"key").hexdigest(), 16) % self.capacity
 
 
     def _hash_djb2(self, key):
@@ -90,6 +92,7 @@ class HashTable:
 
 if __name__ == "__main__":
     ht = HashTable(2)
+    print(ht._hash("blue"))
 
     ht.insert("line_1", "Tiny hash table")
     ht.insert("line_2", "Filled beyond capacity")
