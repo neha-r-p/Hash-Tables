@@ -75,22 +75,26 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         if self.storage[index] is None:
-            return f"{key} does not exist in table"
-        elif self.storage[index]:
-            if self.storage[index].key == key:
-                self.storage[index] == self.storage[index].next
-
-            current_node = self.storage[index]
-            prev_node = self.storage[index]
-            while current_node:
-                if current_node.key == key:
-                    prev_node.next = current_node.next
-                    return current_node #return deleted node
-                else:
-                    prev_node = current_node
-                    current_node = current_node.next
-            #if doesn't return then not in linked list...so after loop, return warning?
-            return f"{key} does not exist in table"
+            print(f"{key} does not exist in table")
+            return
+        else:
+            if self.storage[index].key: #first one is node to delete
+                del_node = self.storage[index]
+                self.storage[index] = self.storage[index].next #change index to start at next node (removing reference to first node)
+                return del_node #return deleted node
+            else:
+                current_node = self.storage[index]
+                prev_node = self.storage[index]
+                while current_node: #goes through whole linked list
+                    if current_node.key == key:
+                        prev_node.next = current_node.next
+                        return current_node #return deleted node
+                    else:
+                        prev_node = current_node
+                        current_node = current_node.next
+                #if doesn't return then not in linked list...so after loop, return warning?
+                print(f"{key} does not exist in table")
+                return
 
 
 
