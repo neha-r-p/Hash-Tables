@@ -25,7 +25,7 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        return int(hashlib.sha256(b"key").hexdigest(), 16) % self.capacity
+        return int(hashlib.sha256(b"key").hexdigest(), 16)
 
 
     def _hash_djb2(self, key):
@@ -53,7 +53,13 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        #check if it is in storage
+        #check if there is space
+        #if there is space, add k,v at index of hashed key 
+        index = self._hash_mod(key)
+        print("index", index)
+        self.storage[index] = [key, value]
+        print(self.storage)
 
 
 
@@ -65,7 +71,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        if self.storage[index] is None:
+            return f"{key} does not exist in table"
+        deleted = self.storage[index]
+        self.storage[index] = None
+        return deleted
 
 
     def retrieve(self, key):
@@ -76,7 +87,10 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        print("retrieve key", f"'{key}'")
+        index = self._hash_mod(key)
+        return self.storage[index][1]
+
 
 
     def resize(self):
@@ -92,7 +106,6 @@ class HashTable:
 
 if __name__ == "__main__":
     ht = HashTable(2)
-    print(ht._hash("blue"))
 
     ht.insert("line_1", "Tiny hash table")
     ht.insert("line_2", "Filled beyond capacity")
