@@ -53,13 +53,15 @@ class HashTable:
 
         Fill this in.
         '''
-        #check if it is in storage
-        #check if there is space
-        #if there is space, add k,v at index of hashed key 
+        node = LinkedPair(key, value)
         index = self._hash_mod(key)
-        print("index", index)
-        self.storage[index] = [key, value]
-        print(self.storage)
+
+        if self.storage[index] is None:
+            self.storage[index] = node
+        else:
+            node.next = self.storage[index]
+            self.storage[index] = node
+
 
 
 
@@ -74,9 +76,23 @@ class HashTable:
         index = self._hash_mod(key)
         if self.storage[index] is None:
             return f"{key} does not exist in table"
-        deleted = self.storage[index]
-        self.storage[index] = None
-        return deleted
+        elif self.storage[index]:
+            if self.storage[index].key == key:
+                self.storage[index] == self.storage[index].next
+
+            current_node = self.storage[index]
+            prev_node = self.storage[index]
+            while current_node:
+                if current_node.key == key:
+                    prev_node.next = current_node.next
+                    return current_node #return deleted node
+                else:
+                    prev_node = current_node
+                    current_node = current_node.next
+            #if doesn't return then not in linked list...so after loop, return warning?
+            return f"{key} does not exist in table"
+
+
 
 
     def retrieve(self, key):
@@ -87,9 +103,17 @@ class HashTable:
 
         Fill this in.
         '''
-        print("retrieve key", f"'{key}'")
         index = self._hash_mod(key)
-        return self.storage[index][1]
+        current_node = self.storage[index]
+
+        while current_node:
+            if current_node.key == key:
+                return current_node.value
+            else:
+                current_node = current_node.next
+        
+        return None
+
 
 
 
