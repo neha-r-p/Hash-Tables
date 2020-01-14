@@ -1,23 +1,24 @@
-import time
 import hashlib
 # '''
 # Linked List hash table key/value pair
 # '''
+
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
         self.next = None
 
+
 class HashTable:
     '''
     A hash table that with `capacity` buckets
     that accepts string keys
     '''
+
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
         self.storage = [None] * capacity
-
 
     def _hash(self, key):
         '''
@@ -27,7 +28,6 @@ class HashTable:
         '''
         return int(hashlib.sha256(b"key").hexdigest(), 16)
 
-
     def _hash_djb2(self, key):
         '''
         Hash an arbitrary key using DJB2 hash
@@ -36,14 +36,12 @@ class HashTable:
         '''
         pass
 
-
     def _hash_mod(self, key):
         '''
         Take an arbitrary key and return a valid integer index
         within the storage capacity of the hash table.
         '''
         return self._hash(key) % self.capacity
-
 
     def insert(self, key, value):
         '''
@@ -62,9 +60,6 @@ class HashTable:
             node.next = self.storage[index]
             self.storage[index] = node
 
-
-
-
     def remove(self, key):
         '''
         Remove the value stored with the given key.
@@ -78,26 +73,24 @@ class HashTable:
             print(f"{key} does not exist in table")
             return
         else:
-            if self.storage[index].key: #first one is node to delete
+            if self.storage[index].key:  # first one is node to delete
                 del_node = self.storage[index]
-                self.storage[index] = self.storage[index].next #change index to start at next node (removing reference to first node)
-                return del_node #return deleted node
+                # change index to start at next node (removing reference to first node)
+                self.storage[index] = self.storage[index].next
+                return del_node  # return deleted node
             else:
                 current_node = self.storage[index]
                 prev_node = self.storage[index]
-                while current_node: #goes through whole linked list
+                while current_node:  # goes through whole linked list
                     if current_node.key == key:
                         prev_node.next = current_node.next
-                        return current_node #return deleted node
+                        return current_node  # return deleted node
                     else:
                         prev_node = current_node
                         current_node = current_node.next
-                #if doesn't return then not in linked list...so after loop, return warning?
+                # if doesn't return then not in linked list...so after loop, return warning?
                 print(f"{key} does not exist in table")
                 return
-
-
-
 
     def retrieve(self, key):
         '''
@@ -115,11 +108,8 @@ class HashTable:
                 return current_node.value
             else:
                 current_node = current_node.next
-        
+
         return None
-
-
-
 
     def resize(self):
         '''
@@ -128,9 +118,16 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
-
-
+        self.capacity *= 2
+        new_ht = HashTable(self.capacity)
+        
+        for pair in self.storage:
+            while pair:
+                new_ht.insert(pair.key, pair.value)
+                pair = pair.next
+        
+        self.storage = new_ht.storage
+            
 
 if __name__ == "__main__":
     ht = HashTable(2)
