@@ -121,37 +121,47 @@ class TestHashTable(unittest.TestCase):
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value == "val-9")
 
-        ht.remove("key-9")
-        ht.remove("key-8")
-        ht.remove("key-7")
-        ht.remove("key-6")
-        ht.remove("key-5")
-        ht.remove("key-4")
-        ht.remove("key-3")
-        ht.remove("key-2")
-        ht.remove("key-1")
-        ht.remove("key-0")
 
-        return_value = ht.retrieve("key-0")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-1")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-2")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-3")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-4")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-5")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-6")
-        self.assertTrue(return_value is None)
-        return_value = ht.retrieve("key-7")
-        self.assertTrue(return_value is None)
+        ht.remove("key-8")
         return_value = ht.retrieve("key-8")
         self.assertTrue(return_value is None)
+
+        ht.remove("key-7")
+        return_value = ht.retrieve("key-7")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-6")
+        return_value = ht.retrieve("key-6")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-5")
+        return_value = ht.retrieve("key-5")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-4")
+        return_value = ht.retrieve("key-4")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-3")
+        return_value = ht.retrieve("key-3")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-2")
+        return_value = ht.retrieve("key-2")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-1")
+        return_value = ht.retrieve("key-1")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-0")
+        return_value = ht.retrieve("key-0")
+        self.assertTrue(return_value is None)
+
+        ht.remove("key-9")
         return_value = ht.retrieve("key-9")
         self.assertTrue(return_value is None)
+
 
     def test_hash_table_resize(self):
         ht = HashTable(8)

@@ -54,11 +54,11 @@ class HashTable:
         node = LinkedPair(key, value)
         index = self._hash_mod(key)
 
-        if self.storage[index] is None:
-            self.storage[index] = node
-        else:
-            node.next = self.storage[index]
-            self.storage[index] = node
+        # if self.storage[index] is None:
+        #     self.storage[index] = node
+        # else:
+        node.next = self.storage[index]
+        self.storage[index] = node
 
     def remove(self, key):
         '''
@@ -73,12 +73,14 @@ class HashTable:
             print(f"{key} does not exist in table")
             return
         else:
-            if self.storage[index].key:  # first one is node to delete
+            if self.storage[index].key == key:  # first one is node to delete
+                print("hello")
                 del_node = self.storage[index]
                 # change index to start at next node (removing reference to first node)
                 self.storage[index] = self.storage[index].next
                 return del_node  # return deleted node
             else:
+                print("i'm in else")
                 current_node = self.storage[index]
                 prev_node = self.storage[index]
                 while current_node:  # goes through whole linked list
@@ -119,14 +121,14 @@ class HashTable:
         Fill this in.
         '''
         self.capacity *= 2
-        new_ht = HashTable(self.capacity)
+        new_ht = HashTable(self.capacity) #create temporary hashtable to create new storage
         
         for pair in self.storage:
             while pair:
                 new_ht.insert(pair.key, pair.value)
-                pair = pair.next
+                pair = pair.next #move on to the next node while exists
         
-        self.storage = new_ht.storage
+        self.storage = new_ht.storage #set storage of original ht to the new storage
             
 
 if __name__ == "__main__":
